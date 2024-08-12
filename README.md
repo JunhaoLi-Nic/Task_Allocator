@@ -1,4 +1,4 @@
-# Next.js + TailwindCSS # Task_Allocator Project
+# Next.js + TailwindCSS Task_Allocator Project
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and configured with [TailwindCSS](https://tailwindcss.com/) for styling.
 
@@ -25,4 +25,11 @@ do not use code -r backend
 
 dotnet dev-certs https --trust  
 ```
+
+## Naming conventions for folders, components
+Examples:
+Directory: frontend/src/..
+
+Using PascalCase for components
+MyComponent
 
