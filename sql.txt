@@ -1,0 +1,71 @@
+CREATE DATABASE `task_allocation` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+CREATE TABLE `homemembers` (
+  `GroupID` char(36) NOT NULL,
+  `UserID` char(36) NOT NULL,
+  `LastAssignedTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`GroupID`,`UserID`),
+  KEY `UserID` (`UserID`),
+  CONSTRAINT `homemembers_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `homes` (`GroupID`),
+  CONSTRAINT `homemembers_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `homes` (
+  `GroupID` char(36) NOT NULL,
+  `CreatorID` char(36) DEFAULT NULL,
+  `GroupName` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`GroupID`),
+  KEY `CreatorID` (`CreatorID`),
+  CONSTRAINT `homes_ibfk_1` FOREIGN KEY (`CreatorID`) REFERENCES `users` (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `rooms` (
+  `RoomID` char(36) NOT NULL,
+  `GroupID` char(36) DEFAULT NULL,
+  `RoomName` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`RoomID`),
+  KEY `GroupID` (`GroupID`),
+  CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `homes` (`GroupID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `taskhistory` (
+  `HistoryID` char(36) NOT NULL,
+  `TaskID` char(36) DEFAULT NULL,
+  `UserID` char(36) DEFAULT NULL,
+  `Timestamp` datetime DEFAULT CURRENT_TIMESTAMP,
+  `Status` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`HistoryID`),
+  KEY `TaskID` (`TaskID`),
+  KEY `UserID` (`UserID`),
+  CONSTRAINT `taskhistory_ibfk_1` FOREIGN KEY (`TaskID`) REFERENCES `tasks` (`TaskID`),
+  CONSTRAINT `taskhistory_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `taskpermissions` (
+  `TaskID` char(36) NOT NULL,
+  `UserID` char(36) NOT NULL,
+  PRIMARY KEY (`TaskID`,`UserID`),
+  KEY `UserID` (`UserID`),
+  CONSTRAINT `taskpermissions_ibfk_1` FOREIGN KEY (`TaskID`) REFERENCES `tasks` (`TaskID`),
+  CONSTRAINT `taskpermissions_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `tasks` (
+  `TaskID` char(36) NOT NULL,
+  `RoomID` char(36) DEFAULT NULL,
+  `Description` text,
+  `IsPrivate` tinyint(1) DEFAULT '0',
+  `Status` varchar(50) DEFAULT NULL,
+  `AssignedTo` char(36) DEFAULT NULL,
+  PRIMARY KEY (`TaskID`),
+  KEY `RoomID` (`RoomID`),
+  KEY `AssignedTo` (`AssignedTo`),
+  CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`RoomID`) REFERENCES `rooms` (`RoomID`),
+  CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`AssignedTo`) REFERENCES `users` (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `users` (
+  `UserID` char(36) NOT NULL,
+  `Name` varchar(255) NOT NULL,
+  PRIMARY KEY (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
