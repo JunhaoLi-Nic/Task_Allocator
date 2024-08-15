@@ -1,10 +1,16 @@
 "use client"
 import React, { useState } from 'react';
+import Link from 'next/link'; // If you're using Next.js
 
-function header() {
+function Header() {
   const [activeTab, setActiveTab] = useState('Home');
 
-  const tabs = ['Home', 'Task', 'Completed', 'Members'];
+  const tabs = [
+    { name: 'Home', href: '/' }, // Add the href for each tab
+    { name: 'Task', href: '/task' },
+    { name: 'Completed', href: '/completed' },
+    { name: 'Members', href: '/members' },
+  ];
 
   return (
     <header className="flex justify-center py-4 sm:py-2">
@@ -12,12 +18,14 @@ function header() {
         <ul className="flex space-x-1 font-medium">
           {tabs.map((tab) => (
             <li
-              key={tab}
-              className={`px-4 py-2 rounded-full cursor-pointer hover:text-gray-300 ${activeTab === tab ? 'bg-white' : 'text-gray-500'
+              key={tab.name}
+              className={`px-4 py-2 rounded-full cursor-pointer hover:text-gray-300 ${activeTab === tab.name ? 'bg-white' : 'text-gray-500'
                 }`}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => setActiveTab(tab.name)}
             >
-              {tab}
+              <Link href={tab.href}>
+                {tab.name}
+              </Link>
             </li>
           ))}
         </ul>
@@ -25,4 +33,5 @@ function header() {
     </header>
   );
 }
-export default header; 
+
+export default Header;
