@@ -1,3 +1,4 @@
+import '@/app/ui/global.css'; 
 
 export const metadata = {
   title: 'Next.js',
@@ -7,11 +8,11 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode; 
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-customBg">{children}</body>
     </html>
   )
 }
