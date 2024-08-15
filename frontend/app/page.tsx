@@ -5,7 +5,7 @@ import Header from "@/app/ui/header";
 
 export default function Page() {
   return (
-    <main className="bg-neutral-600">
+    <main>
       <Header/>
     </main>
   );
