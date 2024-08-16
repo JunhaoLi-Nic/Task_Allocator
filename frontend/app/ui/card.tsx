@@ -4,20 +4,19 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
 
-function CardStack() {
+function Card() {
 
     return (
         <motion.div
         animate={{
-            scale: [1, 2, 2, 1, 1],
-            rotate: [0, 0, 270, 270, 0],
-            borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+            borderRadius: "20%",
         }}
         transition={{
-            duration: 2,
-            ease: "easeInOut",
+            duration: 0.5,
             loop: Infinity, // Optional: Makes the animation loop
         }}
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.9 }}
         style={{
             width: 300, // Width of the div in pixels
             height: 300, // Height of the div in pixels
@@ -34,4 +33,4 @@ function CardStack() {
     );
 };
 
-export default CardStack
+export default Card
