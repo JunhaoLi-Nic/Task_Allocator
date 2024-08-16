@@ -1,9 +1,11 @@
 "use client"
 import React, { useState } from 'react';
 import Link from 'next/link'; // If you're using Next.js
+import {usePathname} from 'next/navigation'; 
 
 function Header() {
-  const [activeTab, setActiveTab] = useState('Home');
+ // const [activeTab, setActiveTab] = useState('Home');
+  const pathname = usePathname(); 
 
   const tabs = [
     { name: 'Home', href: '/' }, // Add the href for each tab
@@ -19,9 +21,8 @@ function Header() {
           {tabs.map((tab) => (
             <li
               key={tab.name}
-              className={`px-4 py-2 rounded-full cursor-pointer hover:text-gray-300 ${activeTab === tab.name ? 'bg-white' : 'text-gray-500'
+              className={`px-4 py-2 rounded-full cursor-pointer hover:text-gray-300 ${pathname === tab.href ? 'bg-white' : 'text-gray-500'
                 }`}
-              onClick={() => setActiveTab(tab.name)}
             >
               <Link href={tab.href}>
                 {tab.name}

@@ -1,5 +1,5 @@
 import '@/app/ui/global.css'; 
-
+import Header from "@/app/ui/header";
 
 export const metadata = {
   title: 'Next.js',
