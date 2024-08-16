@@ -1,5 +1,5 @@
-import '@/app/ui/global.css';
-import { title } from 'process';
+import '@/app/ui/global.css'; 
+import Header from "@/app/ui/header";
 
 export const metadata = {
   title: 'Next.js',
@@ -13,7 +13,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='bg-customBg'>{children}</body>
+      <Header/>
+      <body className="bg-customBg">{children}</body>
     </html>
   );
 }
