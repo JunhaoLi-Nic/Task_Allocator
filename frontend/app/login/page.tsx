@@ -3,6 +3,7 @@
 // Updated Date: 16/08/2024
 "use client";
 
+// TODO: Login page should become a popup window in the main page
 import React from 'react';
 import Link from 'next/link';
 import InputField from '../ui/auth_inputField';

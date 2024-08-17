@@ -1,11 +1,31 @@
 "use client"
 import React, { useState } from 'react';
 import Link from 'next/link'; // If you're using Next.js
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { motion } from "framer-motion";
 
 function Header() {
   const pathname = usePathname();
-  // const [activeTab, setActiveTab] = useState('Home');
+  const router = useRouter(); // Add this line to use useRouter
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Toggle the login state and button
+  const toggleSwitch = () => {
+    setIsLoggedIn(!isLoggedIn); 
+    if (!isLoggedIn) {
+      router.push('/login'); // Redirect to login page when switching on
+    } else {
+      router.push('/profile'); // Redirect to profile page when switching off
+    }
+  };
+
+  const spring = {
+    type: "spring",
+    stiffness: 700,
+    damping: 30
+  };
+
 
   const tabs = [
     { name: 'Home', href: '/' }, // Add the href for each tab
@@ -32,6 +52,30 @@ function Header() {
           ))}
         </ul>
       </div>
+      {/* TODO: Hover on the switch button or text should trigger button change but not direct */}
+      <div className="flex items-center space-x-2 p-10" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+        {/* setting the switch button */}
+        <div
+          className={`switch`}
+          data-ison={isLoggedIn}
+          onClick={toggleSwitch}
+        >
+          <motion.div className="handle" layout transition={spring} />
+        </div>
+        {/* click login or logout also trigger the switch button change */}
+        <button
+          onClick={toggleSwitch}
+          className="relative flex items-center"
+        >
+          <div className={`absolute ${isLoggedIn ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
+            Logout
+          </div>
+          <div className={`absolute ${!isLoggedIn ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
+            Login
+          </div>
+        </button>
+      </div>
+
     </header>
   );
 }
