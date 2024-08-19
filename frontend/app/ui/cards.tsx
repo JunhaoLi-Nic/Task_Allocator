@@ -4,7 +4,7 @@ import Card from './card'; // Ensure this path is correct
 import { LayoutGroup } from 'framer-motion';
 
 function Cards() {
-    const numRows = 2;
+    const numRows =3;
     const numCubesPerRow = 4;
     const [openItemId, setOpenItemId] = useState<number | null>(null);
 
