@@ -58,7 +58,7 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                     flexDirection: 'column',
                     cursor: isOpen ? 'default' : 'pointer',
                     position: isOpen ? 'fixed' : 'relative',  // Fixed if open
-                    top: isOpen ? '30%' : undefined,
+                    top: isOpen ? '20%' : undefined,
                     overflow: 'hidden'
                 }}
                 onMouseLeave={() => setHover(false)}  //init hover
