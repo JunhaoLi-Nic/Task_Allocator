@@ -1,8 +1,6 @@
 "use client"
 import React, { useState } from 'react';
 import Link from 'next/link'; // If you're using Next.js
-import { useRouter, usePathname } from 'next/navigation';
-import { motion } from "framer-motion";
 
 function Header() {
   const pathname = usePathname();
