@@ -11,6 +11,9 @@ const config: Config = {
       colors: {
         customBg: '#f6f2f2',
       },
+      fontFamily: {
+        'cheese': ['Cheese Matcha', 'sans-serif'] // Use a fallback font
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 
 
 interface CardProps {
+    task: string;
     item: number;
     isOpen: boolean;
     isDimmed: boolean;
     onClick: () => void;
 }
 
-const Card: React.FC<CardProps> = ({ item, isOpen, isDimmed, onClick }) => {
+const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) => {
 
     const [hover, setHover] = useState(false);
     const [showExitButton, setShowExitButton] = useState(false);
@@ -17,7 +18,7 @@ const Card: React.FC<CardProps> = ({ item, isOpen, isDimmed, onClick }) => {
     const handleExitClick = () => {
         setTimeout(() => {
             setShowExitButton(true);
-        }, 1000);
+        }, 900);
     };
 
 
@@ -35,8 +36,8 @@ const Card: React.FC<CardProps> = ({ item, isOpen, isDimmed, onClick }) => {
                 initial={{ borderRadius: '0.6rem' }}
                 animate={{
                     borderRadius: isOpen ? '1.2rem' : '0.6rem',
-                    width: isOpen ? 700 : 250,  // Open to full width or initial width
-                    height: isOpen ? 600 : 250,  // Open to full height or initial height
+                    width: isOpen ? 900 : 300,  // Open to full width or initial width
+                    height: isOpen ? 700 : 300,  // Open to full height or initial height
                     zIndex: isOpen ? 1000 : 1,  // Bring to front if open
                     backgroundColor: isDimmed ? 'rgba(200, 200, 200, 0.5)' : 'white'
                 }}
@@ -56,11 +57,31 @@ const Card: React.FC<CardProps> = ({ item, isOpen, isDimmed, onClick }) => {
                     cursor: isOpen ? 'default' : 'pointer',
                     position: isOpen ? 'fixed' : 'relative',  // Fixed if open
                     top: isOpen ? '30%' : undefined,
+                    overflow: 'hidden'
                 }}
                 onMouseLeave={() => setHover(false)}  //init hover
 
             >
-                <motion.h2>Framer Motion</motion.h2>
+                <motion.h2
+                    style ={{
+                        position: 'absolute',
+                        top:'10px',
+                        left:'10px',
+                        fontSize: '24px',
+                        fontWeight: '500',
+                        color: 'darkslategray',
+                        fontFamily: 'Cheese Matcha'
+
+                    }}>{task}</motion.h2>
+                <motion.img 
+                    src = "./kitchen.avif"
+                    alt = " kitchen "
+                    style = {{
+                        position:'absolute',
+                        top:'90px'
+                    
+                    }}
+                />
                 {isOpen && (
 
                     <motion.div

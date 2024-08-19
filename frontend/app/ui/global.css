@@ -3,3 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Cheese Matcha';
+    src: url('../../public/Cheese\ Matcha.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
