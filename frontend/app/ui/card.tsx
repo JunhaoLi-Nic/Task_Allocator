@@ -44,7 +44,7 @@ const Card: React.FC<CardProps> = ({ item, isOpen, isDimmed, onClick }) => {
                     justifyContent: 'center',
                     color: 'black',
                     flexDirection: 'column',
-                    cursor: 'pointer',
+                    cursor: isOpen ? 'default' : 'pointer',
                     position: isOpen ? 'fixed' : 'relative',  // Fixed if open
                     top: isOpen ? '30%' : undefined,
                 }}
