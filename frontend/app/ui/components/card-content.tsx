@@ -25,7 +25,7 @@ const CardContent: React.FC<CardContentProps> = ({ item }) => {
 
     // Toggle completion status of a task
     const toggleCompletion = (index: number) => {
-        const newCompleted = [...completed];
+        const newCompleted = [...completed];  //JavaScript code utilizes the spread operator (...) to create a new copy of the completed array. 
         newCompleted[index] = !newCompleted[index];
         setCompleted(newCompleted);
     };

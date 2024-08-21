@@ -87,13 +87,14 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                     }}
                 >
                     <motion.img
-                        src="./kitchen.png"
-                        alt=" kitchen "
+                        src={`./${task}.png`}
+                        alt= {task}
                         style={{
                             position: 'absolute',
                             top: isOpen ? '100px' : '100px',
                             left: isOpen ? '180px' : '50px',
-                            scale: isOpen ? '0.9' : '1.3'
+                            scale: isOpen ? '0.9' : '1.3',
+                            zIndex:'-1'
                         }}
                     />
                     {showContent && (
