@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from 'framer-motion';
 
 interface CardContentProps {
@@ -19,7 +19,16 @@ const tasks = [
 ];
 
 
+
 const CardContent: React.FC<CardContentProps> = ({ item }) => {
+    const [completed, setCompleted] = useState(Array(tasks.length).fill(false))
+
+    // Toggle completion status of a task
+    const toggleCompletion = (index: number) => {
+        const newCompleted = [...completed];
+        newCompleted[index] = !newCompleted[index];
+        setCompleted(newCompleted);
+    };
 
     return (
         <motion.div
@@ -29,14 +38,22 @@ const CardContent: React.FC<CardContentProps> = ({ item }) => {
             exit={{ opacity: 0 }}
         >
             <ul>
-                
-                    {tasks.map((task, index) => (
-                        <motion.div className="mx-10 text-lg flex flex-row w-3/5 py-3 border-b border-gray-300">
-                            <input type="checkbox" className="mx-4 scale-125 text-lg" />
-                            <li key={index} className="font-cheese">{task}</li>
-                        </motion.div>
-                    ))}
-                
+
+                {tasks.map((task, index) => (
+                    <motion.div className="mx-10 text-lg flex flex-row w-3/5 py-3 border-b border-gray-300">
+                        <input
+                            type="checkbox"
+                            className="mx-4 scale-125 text-lg"
+                            checked={completed[index]}
+                            onChange={() => toggleCompletion(index)
+                            }
+                        />
+                        <li key={index} className={`font-cheese ${completed[index]?'text-gray-500 line-through' : 'text-black'}`}>
+                            {task}
+                        </li>
+                    </motion.div>
+                ))}
+
             </ul>
 
         </motion.div>
