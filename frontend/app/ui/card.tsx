@@ -1,7 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
-import Kitchen from "./spline/kitchen";
-import { UNDERSCORE_NOT_FOUND_ROUTE } from 'next/dist/shared/lib/constants';
 import CardContent from "./components/card-content"
 
 
@@ -91,8 +89,8 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                         alt= {task}
                         style={{
                             position: 'absolute',
-                            top: isOpen ? '100px' : '100px',
-                            left: isOpen ? '180px' : '50px',
+                            top: isOpen ? '50px' : '100px',
+                            left: isOpen ? '200px' : '50px',
                             scale: isOpen ? '0.9' : '1.3',
                             zIndex:'-1'
                         }}
