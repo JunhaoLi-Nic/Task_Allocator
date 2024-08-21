@@ -2,11 +2,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 import Kitchen from "./spline/kitchen";
 import { UNDERSCORE_NOT_FOUND_ROUTE } from 'next/dist/shared/lib/constants';
+import CardContent from "./components/card-content"
 
 
 interface CardProps {
     task: string;
-    item: number;
+    item: string;
     isOpen: boolean;
     isDimmed: boolean;
     onClick: () => void;
@@ -15,11 +16,11 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) => {
 
     const [hover, setHover] = useState(false);
-    const [showExitButton, setShowExitButton] = useState(false);
+    const [showContent, setShowContent] = useState(false);
 
     const handleExitClick = () => {
         setTimeout(() => {
-            setShowExitButton(true);
+            setShowContent(true);
         }, 900);
     };
 
@@ -79,7 +80,7 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                 <motion.div
                     style={{
                         display: 'flex',
-                        flexDirection: 'column', // Changed from 'column' to 'row'
+                        flexDirection: 'row', // Changed from 'column' to 'row'
                         height: '80%', // Ensure the container takes full height of its parent
                         width: '100%',
                         position: 'relative' // Needed for absolute positioning of the child elements
@@ -90,26 +91,17 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                         alt=" kitchen "
                         style={{
                             position: 'absolute',
-                            top: isOpen ? '150px' : '110px',
+                            top: isOpen ? '100px' : '100px',
                             left: isOpen ? '180px' : '50px',
-                            scale: isOpen ? '1' : '1.3'
+                            scale: isOpen ? '0.9' : '1.3'
                         }}
                     />
-                    {isOpen && (
-
-                        <motion.div
-                            layoutId={`card-detail-${item}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                        >
-                            <p className="mx-10 text-lg">Violette needs to clean everything..</p>
-
-                        </motion.div>
+                    {showContent && (
+                        <CardContent item={item} />
                     )}
                 </motion.div>
 
-                {showExitButton && (
+                {showContent && (
                     <div
                         style={{
                             position: 'absolute',
@@ -132,7 +124,7 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                         onClick={(e) => {
                             e.stopPropagation(); // Prevents the card from toggling open when closing
                             onClick();
-                            setShowExitButton(false);
+                            setShowContent(false);
                         }}
                     >
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -146,7 +138,7 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
 
 
             </motion.div>
-        </AnimatePresence>
+        </AnimatePresence >
     );
 };
 
