@@ -1,28 +1,16 @@
 "use client"
 import React, { useState } from 'react';
 import Link from 'next/link'; // If you're using Next.js
+import {usePathname} from 'next/navigation'; 
+import LoginModal from '../modal/userModal';
 
 function Header() {
-  const pathname = usePathname();
-  const router = useRouter(); // Add this line to use useRouter
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+ // const [activeTab, setActiveTab] = useState('Home');
+  const pathname = usePathname(); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Toggle the login state and button
-  const toggleSwitch = () => {
-    setIsLoggedIn(!isLoggedIn); 
-    if (!isLoggedIn) {
-      router.push('/login'); // Redirect to login page when switching on
-    } else {
-      router.push('/profile'); // Redirect to profile page when switching off
-    }
-  };
-
-  const spring = {
-    type: "spring",
-    stiffness: 700,
-    damping: 30
-  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
 
   const tabs = [
@@ -39,9 +27,8 @@ function Header() {
           {tabs.map((tab) => (
             <li
               key={tab.name}
-              className={`px-4 py-2 rounded-full cursor-pointer hover:text-gray-300 ${
-                pathname === tab.href ? 'bg-white' : 'text-gray-500'
-              }`}
+              className={`px-4 py-2 rounded-full cursor-pointer hover:text-gray-300 ${pathname === tab.href ? 'bg-white' : 'text-gray-500'
+                }`}
             >
               <Link href={tab.href}>
                 {tab.name}
@@ -50,29 +37,15 @@ function Header() {
           ))}
         </ul>
       </div>
-      {/* TODO: Hover on the switch button or text should trigger button change but not direct */}
-      <div className="flex items-center space-x-2 p-10" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-        {/* setting the switch button */}
-        <div
-          className={`switch`}
-          data-ison={isLoggedIn}
-          onClick={toggleSwitch}
-        >
-          <motion.div className="handle" layout transition={spring} />
-        </div>
-        {/* click login or logout also trigger the switch button change */}
-        <button
-          onClick={toggleSwitch}
-          className="relative flex items-center"
-        >
-          <div className={`absolute ${isLoggedIn ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
-            Logout
-          </div>
-          <div className={`absolute ${!isLoggedIn ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
-            Login
-          </div>
+
+      {/* User modal: login, register and forgot password pop up window */}
+      <div className="flex justify-center py-2 px-4">
+        <button onClick={openModal} className="bg-gray-200 p-2 rounded shadow my-16 text-l font-semibold">
+          Login
         </button>
+        <LoginModal isOpen={isModalOpen} onClose={closeModal} />
       </div>
+
 
     </header>
   );
