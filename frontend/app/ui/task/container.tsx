@@ -52,28 +52,31 @@ const Container: React.FC<ContainerProps> = ({ householdId, state }) => {
             style={{
                 display: 'flex',
                 flexDirection: 'column',
-                position: 'relative', // Ensure it's positioned relative to its container, if necessary
+                position: 'relative',
+                boxSizing: 'border-box',
+                overflow: 'hidden', // Hide overflow on the outer container
             }}
-            className="overflow-y-auto scrollbar-thin scrollbar-thumb-scrollbar-thumb scrollbar-track-scrollbar-bg hover:scrollbar-thumb-scrollbar-thumb-hover"
+            className="relative" // Ensure relative positioning
         >
-            <motion.h2 className='font-cheese text-3xl m-10'>{state}</motion.h2>
-            <ul>
-                {tasks.map((task, index) => (
-                    <motion.div key={index} className="mx-10 text-lg flex flex-row w-4/5 py-3 border-b border-gray-300">
-                        <input
-                            type="checkbox"
-                            className='mx-5 scale-125 text-lg'
-                            checked={completed[index]}
-                            onChange={() => toggleCompletion(index)}
-                        />
-                        <li className={`font-cheese ${completed[index] ? 'text-gray-500 line-through' : 'text-black'}`}>
-                            {task}
-                        </li>
-                    </motion.div>
-                ))}
-            </ul>
+            <motion.h2 className='font-cheese text-3xl m-10 '>{state}</motion.h2>
+            <div className=" overflow-y-auto scrollbar-webkit">
+                <ul className="px-10 pb-10">
+                    {tasks.map((task, index) => (
+                        <motion.div key={index} className="text-lg flex flex-row w-full py-3 border-b border-gray-300">
+                            <input
+                                type="checkbox"
+                                className='mr-5 scale-125 text-lg'
+                                checked={completed[index]}
+                                onChange={() => toggleCompletion(index)}
+                            />
+                            <li className={`font-cheese ${completed[index] ? 'text-gray-500 line-through' : 'text-black'}`}>
+                                {task}
+                            </li>
+                        </motion.div>
+                    ))}
+                </ul>
+            </div>
         </motion.div>
     );
 };
-
 export default Container;

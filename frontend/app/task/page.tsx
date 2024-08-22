@@ -22,7 +22,7 @@ export default async function Page({
       <Header />
       <div className="flex flex-row h-3/4 space-x-20 justify-center">
         <div
-          className="relative w-3/8 h-7/8">
+          className="relative w-3/8 h-7/8 ">
           <Container
             householdId="1"
             state="Todo"

@@ -40,7 +40,8 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                     width: isOpen ? 900 : 300,  // Open to full width or initial width
                     height: isOpen ? 700 : 300,  // Open to full height or initial height
                     zIndex: isOpen ? 1000 : 1,  // Bring to front if open
-                    backgroundColor: isDimmed ? 'rgba(200, 200, 200, 0.5)' : 'white'
+                    backgroundColor: isDimmed ? 'rgba(200, 200, 200, 0.5)' : 'white',
+                    boxShadow:'5px 5px 7px 2px rgba(0, 0, 0, 0.3)'
                 }}
                 transition={{
                     duration: 0.8,
