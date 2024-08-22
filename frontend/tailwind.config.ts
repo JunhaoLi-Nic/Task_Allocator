@@ -40,7 +40,7 @@ const config: Config = {
         },
         '.scrollbar-webkit': {
           '&::-webkit-scrollbar': {
-            width: '8px',
+            width: '7px',
           },
           '&::-webkit-scrollbar-track': {
             background: 'white',

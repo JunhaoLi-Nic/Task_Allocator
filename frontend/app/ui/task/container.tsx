@@ -58,7 +58,7 @@ const Container: React.FC<ContainerProps> = ({ householdId, state }) => {
             }}
         >
             <motion.h2 className='font-cheese text-3xl m-10 '>{state}</motion.h2>
-            <div className=" overflow-y-auto scrollbar-webkit">
+            <div className=" overflow-y-auto scrollbar-webkit mr-2 ">
                 <ul className="px-10 pb-10">
                     {tasks.map((task, index) => (
                         <motion.div key={index} className="text-lg flex flex-row w-full py-3 border-b border-gray-300">

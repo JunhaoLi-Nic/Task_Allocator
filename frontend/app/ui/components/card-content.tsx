@@ -56,7 +56,7 @@ const CardContent: React.FC<CardContentProps> = ({ item }) => {
                 
             }}
         >
-            <div className="overflow-y-auto scrollbar-webkit">
+            <div className="overflow-y-auto scrollbar-webkit mr-1">
                 <ul>
                     {tasks.map((task, index) => (
                         <motion.div className="mx-10 text-lg flex flex-row w-5/6 py-3 border-b border-gray-300">
