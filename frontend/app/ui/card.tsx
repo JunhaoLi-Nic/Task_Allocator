@@ -34,7 +34,7 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                     }
                     e.stopPropagation(); // Prevents closing when opening the card
                 }}
-                initial={{ borderRadius: '0.6rem' }}
+                initial={{borderRadius: '0.6rem' }}
                 animate={{
                     borderRadius: isOpen ? '1.2rem' : '0.6rem',
                     width: isOpen ? 900 : 300,  // Open to full width or initial width
