@@ -56,7 +56,6 @@ const Container: React.FC<ContainerProps> = ({ householdId, state }) => {
                 boxSizing: 'border-box',
                 overflow: 'hidden', // Hide overflow on the outer container
             }}
-            className="relative" // Ensure relative positioning
         >
             <motion.h2 className='font-cheese text-3xl m-10 '>{state}</motion.h2>
             <div className=" overflow-y-auto scrollbar-webkit">
