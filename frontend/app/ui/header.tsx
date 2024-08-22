@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link'; // If you're using Next.js
 import {usePathname} from 'next/navigation'; 
-import LoginModal from '../modal/userModal';
+import UserModal from '../modal/userModal';
 
 function Header() {
  // const [activeTab, setActiveTab] = useState('Home');
@@ -43,7 +43,7 @@ function Header() {
         <button onClick={openModal} className="bg-gray-200 p-2 rounded shadow my-16 text-l font-semibold">
           Login
         </button>
-        <LoginModal isOpen={isModalOpen} onClose={closeModal} />
+        <UserModal isOpen={isModalOpen} onClose={closeModal} />
       </div>
 
 

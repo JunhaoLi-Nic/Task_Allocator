@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../ui/auth_button';
 
-const LoginModal = ({ isOpen, onClose }) => {
+const UserModal = ({ isOpen, onClose }) => {
     const [modalState, setModalState] = useState('login');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -197,4 +197,4 @@ const LoginModal = ({ isOpen, onClose }) => {
 };
 
 
-export default LoginModal;
+export default UserModal;
