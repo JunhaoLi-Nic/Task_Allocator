@@ -2,10 +2,16 @@
 import React, { useState } from 'react';
 import Link from 'next/link'; // If you're using Next.js
 import {usePathname} from 'next/navigation'; 
+import UserModal from '../modal/userModal';
 
 function Header() {
  // const [activeTab, setActiveTab] = useState('Home');
   const pathname = usePathname(); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
 
   const tabs = [
     { name: 'Home', href: '/' }, // Add the href for each tab
@@ -31,6 +37,16 @@ function Header() {
           ))}
         </ul>
       </div>
+
+      {/* User modal: login, register and forgot password pop up window */}
+      <div className="flex justify-center py-2 px-4">
+        <button onClick={openModal} className="bg-gray-200 p-2 rounded shadow my-16 text-l font-semibold">
+          Login
+        </button>
+        <UserModal isOpen={isModalOpen} onClose={closeModal} />
+      </div>
+
+
     </header>
   );
 }
