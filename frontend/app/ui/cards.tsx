@@ -18,31 +18,24 @@ const items = [
 
 
 function Cards() {
-    const numCubesPerRow = 4;
     const [openItemId, setOpenItemId] = useState<string | null>(null);
 
     const handleCardClick = (itemId: string) => {
         setOpenItemId(openItemId === itemId ? null : itemId);
     };
 
-    const numRows = Math.ceil(items.length / numCubesPerRow);
-
     return (
         <LayoutGroup>
-            <div className="flex flex-col items-center">
-                {Array.from({ length: numRows }).map((_, rowIndex) => (
-                    <div key={rowIndex} className="flex flex-row space-x-8 my-4">
-                        {/* slice(0,4) slice(5,8) slice(8,..) */}
-                        {items.slice(rowIndex * numCubesPerRow, (rowIndex + 1) * numCubesPerRow).map((item) => (
-                            <Card
-                                task={item.label}
-                                key={item.id}
-                                item={item.id}
-                                isOpen={openItemId === item.id}
-                                isDimmed={openItemId !== null && openItemId !== item.id}
-                                onClick={() => handleCardClick(item.id)}
-                            />
-                        ))}
+            <div className="flex flex-wrap justify-center gap-5 py-4 px-20">
+                {items.map((item) => (
+                    <div key={item.id} className="mt-5 w-full lg:w-1/3 xl:w-1/4 2xl:w-1/5">
+                        <Card
+                            task={item.label}
+                            item={item.id}
+                            isOpen={openItemId === item.id}
+                            isDimmed={openItemId !== null && openItemId !== item.id}
+                            onClick={() => handleCardClick(item.id)}
+                        />
                     </div>
                 ))}
             </div>
@@ -51,3 +44,4 @@ function Cards() {
 }
 
 export default Cards;
+

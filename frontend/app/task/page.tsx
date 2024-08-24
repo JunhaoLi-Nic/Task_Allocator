@@ -22,7 +22,7 @@ export default async function Page({
       <Header />
       <div className="p-20 flex flex-col space-y-10 justify-center md:flex-row md:space-y-0 md:space-x-10">
         <div
-          className=" w-3/8 h-[35rem]">
+          className=" w-3/8 h-[40rem]">
           <Container
             householdId="1"
             state="Todo"
@@ -31,7 +31,7 @@ export default async function Page({
 
 
         <div
-          className=" w-3/8 h-[35rem]">
+          className=" w-3/8 h-[40rem]">
           <Container
             householdId="2"
             state="Done"

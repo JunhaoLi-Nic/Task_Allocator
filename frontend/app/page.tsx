@@ -6,9 +6,9 @@ import Cards from "./ui/cards";
 
 export default function Page() {
   return (
-    <main>
+    <main className="min-h-screen w-full">
       <Header />
-      <div className="mx-10"> 
+      <div className="mx-20"> 
         <Cards/> 
       </div>
     </main>

@@ -37,11 +37,11 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                 initial={{borderRadius: '0.6rem' }}
                 animate={{
                     borderRadius: isOpen ? '1.2rem' : '0.6rem',
-                    width: isOpen ? 900 : 300,  // Open to full width or initial width
-                    height: isOpen ? 700 : 300,  // Open to full height or initial height
+                    width: isOpen ? '50%' : '27vh',  // Open to full width or initial width
+                    height: isOpen ? 700 : '27vh',  // Open to full height or initial height
                     zIndex: isOpen ? 1000 : 1,  // Bring to front if open
                     backgroundColor: isDimmed ? 'rgba(200, 200, 200, 0.5)' : 'white',
-                    boxShadow:'5px 5px 7px 2px rgba(0, 0, 0, 0.3)'
+                    boxShadow:'5px 5px 7px 2px rgba(0, 0, 0, 0.3)',
                 }}
                 transition={{
                     duration: 0.8,
@@ -58,7 +58,7 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                     flexDirection: 'column',
                     cursor: isOpen ? 'default' : 'pointer',
                     position: isOpen ? 'fixed' : 'relative',  // Fixed if open
-                    top: isOpen ? '20%' : undefined,
+                    left: isOpen ? '25%' : undefined,
                     overflow: 'hidden'
                 }}
                 onMouseLeave={() => setHover(false)}  //init hover
@@ -85,13 +85,13 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                         position: 'relative' // Needed for absolute positioning of the child elements
                     }}
                 >
-                    <motion.img
+                    <motion.img className = {`md:block ${isOpen ? 'hidden': ''}`}
                         src={`./${task}.png`}
                         alt= {task}
                         style={{
                             position: 'absolute',
-                            top: isOpen ? '50px' : '100px',
-                            left: isOpen ? '200px' : '50px',
+                            top: isOpen ? '50px' : '70px',
+                            left: isOpen ? '200px' : '40px',
                             scale: isOpen ? '0.9' : '1.3',
                             zIndex:'-1'
                         }}
