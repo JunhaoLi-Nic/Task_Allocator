@@ -18,11 +18,11 @@ export default async function Page({
   const totalPages = 5;
 
   return (
-    <main className="h-lvh w-lvw">
+    <main className="min-h-screen w-full">
       <Header />
-      <div className="flex flex-row h-3/4 space-x-20 justify-center">
+      <div className="p-20 flex flex-col space-y-10 justify-center md:flex-row md:space-y-0 md:space-x-10">
         <div
-          className="relative w-3/8 h-7/8 ">
+          className=" w-3/8 h-[35rem]">
           <Container
             householdId="1"
             state="Todo"
@@ -31,7 +31,7 @@ export default async function Page({
 
 
         <div
-          className="relative w-3/8 h-7/8">
+          className=" w-3/8 h-[35rem]">
           <Container
             householdId="2"
             state="Done"
