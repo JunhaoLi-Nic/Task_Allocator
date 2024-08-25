@@ -37,8 +37,8 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                 initial={{borderRadius: '0.6rem' }}
                 animate={{
                     borderRadius: isOpen ? '1.2rem' : '0.6rem',
-                    width: isOpen ? '50%' : '27vh',  // Open to full width or initial width
-                    height: isOpen ? 700 : '27vh',  // Open to full height or initial height
+                    width: isOpen ? '50%' : '80%',  // Open to full width or initial width
+                    height: isOpen ? 700 : '100%',  // Open to full height or initial height
                     zIndex: isOpen ? 1000 : 1,  // Bring to front if open
                     backgroundColor: isDimmed ? 'rgba(200, 200, 200, 0.5)' : 'white',
                     boxShadow:'5px 5px 7px 2px rgba(0, 0, 0, 0.3)',

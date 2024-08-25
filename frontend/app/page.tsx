@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <main className="min-h-screen w-full">
       <Header />
-      <div className="mx-20"> 
+      <div className="mx-auto"> 
         <Cards/> 
       </div>
     </main>
