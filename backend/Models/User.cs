@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+
 namespace backend.Models;
 
 public class User
@@ -13,3 +15,4 @@ public class User
         Name = name;
     }
 }
+
