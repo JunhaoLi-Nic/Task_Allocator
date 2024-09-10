@@ -38,7 +38,7 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                 animate={{
                     borderRadius: isOpen ? '1.2rem' : '0.6rem',
                     width: isOpen ? '50%' : '80%',  // Open to full width or initial width
-                    height: isOpen ? 700 : '100%',  // Open to full height or initial height
+                    height: isOpen ? 650 : '100%',  // Open to full height or initial height
                     zIndex: isOpen ? 1000 : 1,  // Bring to front if open
                     backgroundColor: isDimmed ? 'rgba(200, 200, 200, 0.5)' : 'white',
                     boxShadow:'5px 5px 7px 2px rgba(0, 0, 0, 0.3)',
@@ -59,7 +59,8 @@ const Card: React.FC<CardProps> = ({ task, item, isOpen, isDimmed, onClick }) =>
                     cursor: isOpen ? 'default' : 'pointer',
                     position: isOpen ? 'fixed' : 'relative',  // Fixed if open
                     left: isOpen ? '25%' : undefined,
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    top: isOpen ? '15%' : undefined
                 }}
                 onMouseLeave={() => setHover(false)}  //init hover
 
