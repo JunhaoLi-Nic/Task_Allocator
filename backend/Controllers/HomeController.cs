@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using backend.Models;
 using backend.Data;
+using Microsoft.Identity.Client;
 
 namespace backend.Controllers
 {
@@ -24,12 +25,26 @@ namespace backend.Controllers
             return Json(users);
         }
 
+        [HttpGet("home/user/{userId}")]
+        public IActionResult GetUserByUserId(Guid userId)
+        {
+            _logger.LogInformation($"Attempting to find user with ID: {userId}");
+            var user = _context.Users.Find(userId);
+            if (user == null)
+            {
+                _logger.LogWarning($"User with ID {userId} not found.");
+                return NotFound($"User with ID {userId} not found.");
+            }
+            return Json(user);
+        }
+
+
         // POST method to create a new User
         [HttpPost("home/create-user")]
         public IActionResult CreateUser([FromBody] UserCreateModel model)
         {
             // Create a new User instance
-            var newUser = new User(Guid.NewGuid(), model.Name, model.Email);
+            var newUser = new User(Guid.NewGuid(), model.Name);
 
             // Add the new User to the database context
             _context.Users.Add(newUser);
@@ -50,6 +65,5 @@ namespace backend.Controllers
     public class UserCreateModel
     {
         public string Name { get; set; } = "";
-        public string Email { get; set; } = "";
     }
 }

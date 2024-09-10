@@ -25,6 +25,8 @@ public class AppDbContext : DbContext
             .HasKey(tp => new { tp.TaskID, tp.UserID });
 
         // Additional configurations can go here
+        modelBuilder.Entity<User>().HasKey(u => u.UserID); // Ensure this is set correctly
+
     }
 }
 

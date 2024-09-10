@@ -27,10 +27,11 @@ namespace backend.Models
             AssignedTo = assignedTo;
         }
         
-        public Tasks(Guid taskID, string description)
+        public Tasks(Guid taskID, string description, int roomID)
         {
             TaskID = taskID;
             Description = description;
+            RoomID = roomID;
         }
     }
 }
