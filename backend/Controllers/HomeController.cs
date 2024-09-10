@@ -29,7 +29,7 @@ namespace backend.Controllers
         public IActionResult CreateUser([FromBody] UserCreateModel model)
         {
             // Create a new User instance
-            var newUser = new User(Guid.NewGuid(), model.Name);
+            var newUser = new User(Guid.NewGuid(), model.Name, model.Email);
 
             // Add the new User to the database context
             _context.Users.Add(newUser);
@@ -46,9 +46,10 @@ namespace backend.Controllers
         }
     }
 
-    // This class is used for model binding in the CreateUser action
+    // This class is used for model binding in the CreateUser action    
     public class UserCreateModel
     {
         public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
     }
 }
