@@ -8,30 +8,30 @@ namespace backend.Models
     public class Tasks
     {
         public Guid TaskID { get; set; }
-
-        public int RoomID { get; set; }
-
-        public string Description { get; set; }
-
+        public Guid? RoomID { get; set; }  // Changed to nullable Guid
+        public string? Description { get; set; }  // Made nullable
         public bool IsPrivate { get; set; }
         public string Status { get; set; } = ""; // Default value
         public string AssignedTo { get; set; } = "Unassigned"; // Default value
  
-        public Tasks(Guid taskID, int roomID, string description, bool isPrivate, string status, string assignedTo)
+        public Tasks(Guid taskID, Guid? roomID, string? description, bool isPrivate, string? status = null, string? assignedTo = null)
         {
             TaskID = taskID;
             RoomID = roomID;
-            Description = description;
+            Description = description ?? "";  // Use empty string if description is null
             IsPrivate = isPrivate;
-            Status = status;
-            AssignedTo = assignedTo;
+            Status = status ?? "";
+            AssignedTo = assignedTo ?? "Unassigned";
         }
         
-        public Tasks(Guid taskID, string description, int roomID)
+        public Tasks(Guid taskID, string? description, Guid? roomID)
         {
             TaskID = taskID;
-            Description = description;
+            Description = description ?? "";  // Use empty string if description is null
             RoomID = roomID;
+            IsPrivate = false;  // Default value
+            Status = "";  // Default value
+            AssignedTo = "Unassigned";  // Default value
         }
     }
 }

@@ -28,8 +28,8 @@ namespace backend.Controllers
                             select new
                             {
                                 t.TaskID,
-                                t.Description,
-                                t.RoomID
+                                Description = t.Description ?? "",  // Handle NULL
+                                RoomID = t.RoomID  // No need to handle NULL for Guid?
                             }).ToListAsync();
 
             if (tasks == null || !tasks.Any())
@@ -65,7 +65,7 @@ namespace backend.Controllers
         {
             public Guid TaskID { get; set; }
             public string Description { get; set; } = "";
-            public int RoomID { get; set; }
+            public Guid RoomID { get; set; }
         }
 
         
