@@ -15,6 +15,8 @@ public class AppDbContext : DbContext
 
     public DbSet<Homes> Homes { get; set; }
 
+    public DbSet<Rooms> Rooms { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -30,6 +32,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>().HasKey(u => u.UserID); // Ensure this is set correctly
 
         modelBuilder.Entity<Homes>().HasKey(h => h.GroupID);
+
+        modelBuilder.Entity<Rooms>().HasKey(r => r.RoomID);
 
     }
 
