@@ -13,6 +13,8 @@ public class AppDbContext : DbContext
 
     public DbSet<TaskPermissions> TaskPermissions { get; set; }
 
+    public DbSet<Homes> Homes { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -27,6 +29,9 @@ public class AppDbContext : DbContext
         // Additional configurations can go here
         modelBuilder.Entity<User>().HasKey(u => u.UserID); // Ensure this is set correctly
 
+        modelBuilder.Entity<Homes>().HasKey(h => h.GroupID);
+
     }
+
 }
 
