@@ -17,6 +17,15 @@ public class AppDbContext : DbContext
 
     public DbSet<Rooms> Rooms { get; set; }
 
+    public DbSet<TaskHistory> TaskHistory { get; set; }
+   
+    
+    /// <summary>
+    /// Configures the model and relationships between entities when the database is created.
+    /// This method is called when the model for a derived context has been initialized, but
+    /// before the model has been locked down and used to initialize the context.
+    /// </summary>
+    /// <param name="modelBuilder">The builder being used to construct the model for this context.</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -34,6 +43,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Homes>().HasKey(h => h.GroupID);
 
         modelBuilder.Entity<Rooms>().HasKey(r => r.RoomID);
+
+        modelBuilder.Entity<TaskHistory>().HasKey(th => th.TaskHistoryID);
 
     }
 

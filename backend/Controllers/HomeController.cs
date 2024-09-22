@@ -61,7 +61,7 @@ namespace backend.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-            // Create a home
+        // Create a home
         [HttpPost("home/user/{userId}/create-home")]
         public async Task<IActionResult> CreateHomeByUserId(string userId, [FromBody] HomeCreateModel homeModel)
         {
@@ -194,7 +194,12 @@ namespace backend.Controllers
             return CreatedAtAction(nameof(GetRoomsByHomeId), new { userId = userId, homeId = homeId, roomId = newRoom.RoomID }, newRoom);
         }
 
-        // Get rooms by homeId
+        /// <summary>
+        /// Retrieves rooms for a specific home.
+        /// </summary>
+        /// <param name="userId">The ID of the user to retrieve rooms for.</param>
+        /// <param name="homeId">The ID of the home to retrieve rooms for.</param>
+        /// <returns>A list of rooms for the specified home.</returns>
         [HttpGet("home/user/{userId}/homes/{homeId}/rooms")]
         public async Task<IActionResult> GetRoomsByHomeId(string userId, string homeId)
         {
@@ -222,12 +227,18 @@ namespace backend.Controllers
         }
 
         // This class is used for model binding in the CreateHomeByUserId action
+        /// <summary>
+        /// Represents the data model for creating a new home.
+        /// </summary>
         public class HomeCreateModel
         {
             public string GroupName { get; set; } = string.Empty;
         }
 
         // This class is used for model binding in the CreateRoomByHomeId action
+        /// <summary>
+        /// Represents the data model for creating a new room.
+        /// </summary>
         public class RoomCreateModel
         {
             public string RoomName { get; set; } = string.Empty;
@@ -235,6 +246,9 @@ namespace backend.Controllers
     }
 
     // This class is used for model binding in the CreateUser action    
+    /// <summary>
+    /// Represents the data model for creating a new user.
+    /// </summary>
     public class UserCreateModel
     {
         public string Name { get; set; } = "";
