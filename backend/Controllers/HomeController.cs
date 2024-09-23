@@ -138,6 +138,29 @@ namespace backend.Controllers
             return Ok(homes);
         }
 
+        [HttpDelete("home/user/{userId}/homes")]
+        public async Task<IActionResult> DeleteHomesByUserId(string userId)
+        {
+            if (!Guid.TryParse(userId, out Guid userGuid)) // Check if the userId is in the correct format, It returns a boolean value indicating whether the conversion succeeded or failed.
+            {
+                return BadRequest("Invalid user ID format");
+            }
+
+            var homes = await _context.Homes
+                .Where(h => h.CreatorID == userGuid)
+                .ToListAsync();
+
+            if (homes == null || !homes.Any())
+            {
+                return NotFound("No homes found for this user");
+            }
+                
+            _context.Homes.RemoveRange(homes);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         // Delete a home
         [HttpDelete("home/user/{userId}/homes/{homeId}")]
         public async Task<IActionResult> DeleteHomeByHomeId(string userId, string homeId)
