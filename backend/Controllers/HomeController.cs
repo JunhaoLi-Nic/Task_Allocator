@@ -230,6 +230,26 @@ namespace backend.Controllers
             return CreatedAtAction(nameof(GetRoomsByHomeId), new { userId = userId, homeId = homeId, roomId = newRoom.RoomID }, newRoom);
         }
 
+        [HttpDelete("home/user/{userId}/homes/{homeId}/rooms/{roomId}")]
+        public async Task<IActionResult> DeleteRoomByRoomId(string userId, string homeId, string roomId)
+        {
+            if (!Guid.TryParse(userId, out Guid userGuid) || !Guid.TryParse(homeId, out Guid homeGuid) || !Guid.TryParse(roomId, out Guid roomGuid))
+            {
+                return BadRequest("Invalid user ID, home ID, or room ID format");
+            }
+
+            var room = await _context.Rooms.FindAsync(roomGuid);
+
+            if (room == null || room.HomeID != homeGuid)
+            {
+                return NotFound("Room not found for this home");
+            }
+
+            _context.Rooms.Remove(room);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
         /// <summary>
         /// Retrieves rooms for a specific home.
         /// </summary>
