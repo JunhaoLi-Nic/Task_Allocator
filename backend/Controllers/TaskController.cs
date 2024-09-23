@@ -103,8 +103,24 @@ namespace backend.Controllers
             return CreatedAtAction(nameof(GetTaskHistoryByUserIdAndTaskId), new { userId = userId, taskId = taskId }, newTaskHistory);
         }
 
-        
+        [HttpDelete("home/user/{userId}/task/{taskId}/delete-task-history/{taskHistoryId}")]
+        public async Task<IActionResult> DeleteTaskHistoryByUserIdAndTaskId(Guid userId, Guid taskId, Guid taskHistoryId)
+        {
+            var taskHistory = await _context.TaskHistory
+                .Where(th => th.UserID == userId && th.TaskID == taskId)
+                .FirstOrDefaultAsync();
 
+            if (taskHistory == null)
+            {
+                return NotFound();
+            }
+
+            _context.TaskHistory.Remove(taskHistory);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+        
 
         // This class is used for model binding in the CreateTaskByUserId action
         /// <summary>

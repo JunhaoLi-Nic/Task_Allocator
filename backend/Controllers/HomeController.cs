@@ -230,6 +230,16 @@ namespace backend.Controllers
             return CreatedAtAction(nameof(GetRoomsByHomeId), new { userId = userId, homeId = homeId, roomId = newRoom.RoomID }, newRoom);
         }
 
+        // Delete a room
+        // summary: Deletes a room by its ID for a specific home.
+        // parameters:
+        // - userId: The ID of the user.
+        // - homeId: The ID of the home.
+        // - roomId: The ID of the room to delete.
+        // returns:
+        // - 204 No Content: If the room was deleted successfully.
+        // - 400 Bad Request: If the user ID, home ID, or room ID format is invalid.
+        // - 404 Not Found: If the room is not found for the specified home.
         [HttpDelete("home/user/{userId}/homes/{homeId}/rooms/{roomId}")]
         public async Task<IActionResult> DeleteRoomByRoomId(string userId, string homeId, string roomId)
         {
