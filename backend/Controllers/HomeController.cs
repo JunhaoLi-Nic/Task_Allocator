@@ -55,6 +55,19 @@ namespace backend.Controllers
             return CreatedAtAction(nameof(GetData), new { id = newUser.UserID }, newUser);
         }
 
+        [HttpDelete("home/user/{userId}")]
+        public IActionResult DeleteUser(Guid userId)
+        {
+            var user = _context.Users.Find(userId); 
+            if(user == null)
+            {
+                return NotFound($"User with ID {userId} not found.");
+            }
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
