@@ -1,43 +1,87 @@
 import React, { useState } from 'react';
 import Button from '../ui/auth_button';
+import axios from 'axios';
 
-const UserModal = ({ isOpen, onClose }) => {
+const UserModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
     const [modalState, setModalState] = useState('login');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const [showPassword, setShowPassword] = useState(false);
+    const [name, setName] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [loginError, setLoginError] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setEmailError('');
         setPasswordError('');
-    
+        setLoginError('');
+
         if (email.trim() === '') {
-            setEmailError('Username cannot be empty');
-          return;
+            setEmailError('Email cannot be empty');
+            return;
         }
         if (password.trim() === '') {
-          setPasswordError('Password cannot be empty');
-          return;
+            setPasswordError('Password cannot be empty');
+            return;
         }
-        // if (password.length < 8) {
-        //   setPasswordError('Password must be at least 8 characters long');
-        //   return;
-        // }
-        // if (!/[0-9]/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-        //   setPasswordError('Password must contain at least one numeric digit and one special character');
-        //   return;
-        // }
-    
-        // alert('Form submitted!');
-        onClose(); // Close the modal after successful submission
-      };
-    
-    // const togglePasswordVisibility = () => {
-    //     setShowPassword(!showPassword);
-    // };
+
+        setIsLoading(true);
+
+        try {
+            const response = await axios.post('http://localhost:5045/home/login', {
+                Email: email,
+                Password: password
+            });
+            
+            console.log('User logged in:', response.data);
+            // Handle successful login (e.g., store user data in state or local storage)
+            onClose(); // Close the modal after successful login
+        } catch (error) {
+            console.error('Login failed:', error);
+            setLoginError('Invalid email or password');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setEmailError('');
+        setPasswordError('');
+
+        if (name.trim() === '') {
+            setEmailError('Name cannot be empty');
+            return;
+        }
+        if (email.trim() === '') {
+            setEmailError('Email cannot be empty');
+            return;
+        }
+        if (password.trim() === '') {
+            setPasswordError('Password cannot be empty');
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            const response = await axios.post('http://localhost:5045/home/create-user', {
+                Name: name,
+                Email: email,
+                Password: password
+            });
+
+            console.log('User registered:', response.data);
+            onClose(); // Close the modal after successful registration
+        } catch (error) {
+            console.error('Registration failed:', error);
+            // Handle error (e.g., show error message to user)
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const renderContent = () => {
       switch (modalState) {
@@ -45,8 +89,8 @@ const UserModal = ({ isOpen, onClose }) => {
           return (
             <>
               <h2 className="text-xl font-bold mb-4 text-center text-gray-800">Login</h2>
-              {/* Form section */}
-              <form className="space-y-4" onSubmit={handleSubmit}>
+              {loginError && <p className='text-red-500 text-sm text-center mb-4'>{loginError}</p>}
+              <form className="space-y-4" onSubmit={handleLogin}>
                 {/* Email section */}
                 <div>
                   <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
@@ -78,7 +122,7 @@ const UserModal = ({ isOpen, onClose }) => {
                   {passwordError && <p className='text-red-500 text-sm'>{passwordError}</p>}
                 </div>
                 <div className='mt-6 flex items-center justify-center w-full'>
-                  <Button text='Login'/>
+                  <Button text={isLoading ? 'Logging in...' : 'Login'} type="submit" disabled={isLoading}/>
                 </div>
               </form>
               <div className="text-center mt-4">
@@ -98,17 +142,30 @@ const UserModal = ({ isOpen, onClose }) => {
           return (
             <>
               <h2 className='text-xl font-bold mb-4 text-center text-gray-800'>Register</h2>
-              {/* Form section */}
-              <form className='space-y-4' onSubmit={handleSubmit}>
+              <form className='space-y-4' onSubmit={handleRegister}>
+                {/* Name section */}
+                <div>
+                  <label htmlFor='name' className='block text-gray-700 font-bold mb-2'>
+                    Name
+                  </label>
+                  <input
+                    id='name'
+                    type='text'
+                    className='appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
+                    placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
                 {/* Email section */}
                 <div>
-                  <label htmlFor='email' className='block text-gray-700 font-blod mb-2'>
+                  <label htmlFor='email' className='block text-gray-700 font-bold mb-2'>
                     Email
                   </label>
                   <input
                     id='email'
                     type='email'
-                    className='appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline' 
+                    className='appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -117,13 +174,13 @@ const UserModal = ({ isOpen, onClose }) => {
                 </div>
                 {/* Password section */}
                 <div>
-                  <label htmlFor='password' className='block text-gray-700 font-blod mb-2'>
+                  <label htmlFor='password' className='block text-gray-700 font-bold mb-2'>
                   Password
                   </label>
                   <input
                     id='password'
                     type='password'
-                    className='appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline' 
+                    className='appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e => setPassword(e.target.value))}
@@ -131,7 +188,7 @@ const UserModal = ({ isOpen, onClose }) => {
                   {passwordError && <p className='text-red-500 text-sm'>{passwordError}</p>}
                 </div>
                 <div className='mt-6 flex items-center justify-center w-full'>
-                  <Button text='Register'/>
+                  <Button text={isLoading ? 'Registering...' : 'Register'} disabled={isLoading} type="submit"/>
                 </div>
               </form>
               <div className="text-center mt-4">
@@ -148,7 +205,7 @@ const UserModal = ({ isOpen, onClose }) => {
               <>
                 <h2 className='text-xl font-bold mb-4 text-center text-gray-800'>Forgot Password</h2>
                 {/* Form section */}
-                <form className='space-y-4' onSubmit={handleSubmit}>
+                <form className='space-y-4' onSubmit={handleLogin}>
                   {/* Email section */}
                   <div>
                     <label htmlFor='email' className='block text-gray-700 font-blod mb-2'>

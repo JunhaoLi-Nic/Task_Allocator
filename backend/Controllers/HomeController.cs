@@ -4,6 +4,8 @@ using backend.Models;
 using backend.Data;
 using Microsoft.Identity.Client;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using BCrypt.Net;
 
 namespace backend.Controllers
 {
@@ -44,15 +46,34 @@ namespace backend.Controllers
         [HttpPost("home/create-user")]
         public IActionResult CreateUser([FromBody] UserCreateModel model)
         {
-            // Create a new User instance
-            var newUser = new User(Guid.NewGuid(), model.Name);
+            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
+            {
+                return BadRequest("Email and password are required.");
+            }
 
-            // Add the new User to the database context
+            if (_context.Users.Any(u => u.Email == model.Email))
+            {
+                return Conflict("A user with this email already exists.");
+            }
+
+            var newUser = new User(model.Name, model.Email, model.Password);
+
             _context.Users.Add(newUser);
             _context.SaveChanges();
 
-            // Return the created user with a 201 Created status
-            return CreatedAtAction(nameof(GetData), new { id = newUser.UserID }, newUser);
+            return CreatedAtAction(nameof(GetUserByUserId), new { userId = newUser.UserID }, new { userId = newUser.UserID, name = newUser.Name, email = newUser.Email });
+        }
+
+        
+        // This class is used for model binding in the CreateUser action    
+        /// <summary>
+        /// Represents the data model for creating a new user.
+        /// </summary>
+        public class UserCreateModel
+        {
+            public string Name { get; set; } = "";
+            public string Email { get; set; } = "";
+            public string Password { get; set; } = "";
         }
 
         [HttpDelete("home/user/{userId}")]
@@ -309,14 +330,37 @@ namespace backend.Controllers
         {
             public string RoomName { get; set; } = string.Empty;
         }
+
+        // Login
+        /// <summary>
+        /// Represents the data model for user login.
+        /// </summary>
+        [HttpPost("home/login")]
+        public IActionResult Login([FromBody] UserLoginModel model)
+        {
+            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
+            {
+                return BadRequest("Email and password are required.");
+            }
+
+            var user = _context.Users.FirstOrDefault(u => u.Email == model.Email);
+
+            if (user == null || !user.VerifyPassword(model.Password))
+            {
+                return Unauthorized("Invalid email or password.");
+            }
+
+            // TODO: Generate and return a JWT token for authentication
+
+            return Ok(new { userId = user.UserID, name = user.Name, email = user.Email });
+        }
+
+        public class UserLoginModel
+        {
+            public string Email { get; set; } = "";
+            public string Password { get; set; } = "";
+        }
     }
 
-    // This class is used for model binding in the CreateUser action    
-    /// <summary>
-    /// Represents the data model for creating a new user.
-    /// </summary>
-    public class UserCreateModel
-    {
-        public string Name { get; set; } = "";
-    }
+
 }
