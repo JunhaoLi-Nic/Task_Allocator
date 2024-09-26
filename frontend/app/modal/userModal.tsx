@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../ui/auth_button';
 import axios from 'axios';
+import Cookies from 'js-cookie'; // Make sure to install this package: npm install js-cookie @types/js-cookie
 
 const UserModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
     const [modalState, setModalState] = useState('login');
@@ -11,6 +12,10 @@ const UserModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [loginError, setLoginError] = useState('');
+
+    const saveUserIdToCookie = (userId: string) => {
+        Cookies.set('userId', userId, { expires: 7 }); // Expires in 7 days
+    };
 
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -36,7 +41,7 @@ const UserModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }
             });
             
             console.log('User logged in:', response.data);
-            // Handle successful login (e.g., store user data in state or local storage)
+            saveUserIdToCookie(response.data.userId); // Save user ID to cookie
             onClose(); // Close the modal after successful login
         } catch (error) {
             console.error('Login failed:', error);
@@ -74,6 +79,7 @@ const UserModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }
             });
 
             console.log('User registered:', response.data);
+            saveUserIdToCookie(response.data.userId); // Save user ID to cookie
             onClose(); // Close the modal after successful registration
         } catch (error) {
             console.error('Registration failed:', error);
