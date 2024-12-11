@@ -41,7 +41,7 @@ const CardContent: React.FC<CardContentProps> = ({ item }) => {
     };
 
     return (
-        <motion.div
+        <motion.div className="w-full lg:w-1/2"
             layoutId={`card-detail-${item}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -51,8 +51,8 @@ const CardContent: React.FC<CardContentProps> = ({ item }) => {
                 flexDirection: 'column',
                 position: 'relative',
                 boxSizing: 'border-box',
-                overflow: 'hidden',// Hide overflow on the outer container
-                width:'50%'
+                overflow: 'hidden'// Hide overflow on the outer container
+      
                 
             }}
         >

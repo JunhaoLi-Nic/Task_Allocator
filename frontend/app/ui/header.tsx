@@ -1,53 +1,48 @@
 "use client"
 import React, { useState } from 'react';
 import Link from 'next/link'; // If you're using Next.js
-import {usePathname} from 'next/navigation'; 
+import { usePathname } from 'next/navigation';
 import UserModal from '../modal/userModal';
 
 function Header() {
- // const [activeTab, setActiveTab] = useState('Home');
-  const pathname = usePathname(); 
+  const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-
   const tabs = [
-    { name: 'Home', href: '/' }, // Add the href for each tab
-    { name: 'Task', href: '/task' },
-    { name: 'Completed', href: '/completed' },
+    { name: 'Home', href: '/' },
+    { name: 'Tasks', href: '/task' },
+    { name: 'Bills', href: '/bill' },
     { name: 'Members', href: '/members' },
   ];
 
   return (
-    <header className="flex justify-center py-4 sm:py-2">
-      <div className="bg-gray-200 p-2 rounded-full shadow my-16">
-        <ul className="flex space-x-1 font-medium">
-          {tabs.map((tab) => (
-            <li
-              key={tab.name}
-              className={`px-4 py-2 rounded-full cursor-pointer hover:text-gray-300 ${pathname === tab.href ? 'bg-white' : 'text-gray-500'
-                }`}
-            >
-              <Link href={tab.href}>
-                {tab.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+    <div className="flex items-center justify-between w-full px-10 py-4 pt-20">
+      <div className="flex-1 flex justify-center">
+        <button>
+          +
+        </button>
+      </div> 
+      <div className="flex-1 flex justify-center">
+        <div className="bg-gray-200 p-2 rounded-full shadow">
+          <ul className="flex space-x-4 font-medium">
+            {tabs.map((tab) => (
+              <li key={tab.name} className={`px-4 py-2 rounded-full cursor-pointer hover:text-gray-300 ${pathname === tab.href ? 'bg-white' : 'text-gray-500'}`}>
+                <Link href={tab.href}>{tab.name}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-
-      {/* User modal: login, register and forgot password pop up window */}
-      <div className="flex justify-center py-2 px-4">
-        <button onClick={openModal} className="bg-gray-200 p-2 rounded shadow my-16 text-l font-semibold">
+      <div className="flex-1 flex justify-center mx-3">
+        <button onClick={openModal} className="bg-gray-200 p-2 rounded shadow text-lg font-semibold">
           Login
         </button>
         <UserModal isOpen={isModalOpen} onClose={closeModal} />
       </div>
-
-
-    </header>
+    </div>
   );
 }
 
